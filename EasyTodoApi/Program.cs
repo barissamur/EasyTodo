@@ -7,6 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 var cs = builder.Configuration.GetConnectionString("BaglantiCumlesi"); // appsettings.json dosyasýndaki Connection String cümlesini alýyoruz
 builder.Services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(cs));
 
+//CORS ayarlarý
+builder.Services.AddCors(options => options
+    .AddDefaultPolicy(policy => policy
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin()));
 
 
 builder.Services.AddControllers();
@@ -24,6 +30,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
